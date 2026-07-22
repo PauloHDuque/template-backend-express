@@ -20,7 +20,8 @@ describe('createSafeUser', () => {
       password: 'secure-password',
     });
 
-    expect(prisma.user.create).toHaveBeenCalledWith({
+    // eslint-disable-next-line @typescript-eslint/unbound-method
+    expect(jest.mocked(prisma.user.create)).toHaveBeenCalledWith({
       data: {
         email: 'user@example.com',
         password: 'secure-password',

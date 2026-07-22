@@ -1,6 +1,10 @@
 import request from 'supertest';
 import { app } from '../src/app';
 
+jest.mock('../src/config/database', () => ({
+  prisma: {},
+}));
+
 describe('GET /health (e2e)', () => {
   it('returns the API health status and a valid timestamp', async () => {
     const response = await request(app).get('/health').expect(200);

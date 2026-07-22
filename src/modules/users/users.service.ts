@@ -1,11 +1,17 @@
 import { createUserInputSchema, type CreateUserInput } from './users.schema';
+import { prisma } from '../../config/database';
 
 export interface SafeUser {
+  id: number;
   email: string;
 }
 
-export function createSafeUser(input: CreateUserInput): SafeUser {
-  const user = createUserInputSchema.parse(input);
+export async function createSafeUser(input: CreateUserInput): Promise<SafeUser> {
+  const data = createUserInputSchema.parse(input);
 
-  return { email: user.email };
+  const user = await prisma.user.create({
+    data,
+  });
+
+  return { id: user.id, email: user.email };
 }

@@ -4,7 +4,8 @@ import { ZodError } from 'zod';
 
 export function createUser(request: Request, response: Response): void {
   try {
-    const user = createSafeUser(request.body);
+    const body = request.body as { email: string; password: string };
+    const user = createSafeUser(body);
     response.status(201).json(user);
   } catch (error) {
     if (error instanceof ZodError) {
